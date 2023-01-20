@@ -1,2 +1,2 @@
-# bootcamp-react
+# React course ⚛
 Learning react by midudev
