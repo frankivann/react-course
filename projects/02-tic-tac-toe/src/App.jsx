@@ -8,9 +8,19 @@ import { TURNS, WINNER_COMBOS } from './constants'
 
 import './App.css'
 
+const initialBoard = () => {
+  const boardFromStorage = window.localStorage.getItem('board')
+  return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null)
+}
+
+const initialTurn = () => {
+  const turnFromStorage = window.localStorage.getItem('turn')
+  return turnFromStorage ?? TURNS.X
+}
+
 function App () {
-  const [board, setBoard] = useState(Array(9).fill(null))
-  const [turn, setTurn] = useState(TURNS.X)
+  const [board, setBoard] = useState(initialBoard())
+  const [turn, setTurn] = useState(initialTurn())
   const [winner, setWinner] = useState(null) // null no hay ganador, false empate.
 
   const checkWinner = (boardToCheck) => {
@@ -47,11 +57,16 @@ function App () {
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X
     setTurn(newTurn)
 
+    // guardar ganador
+    window.localStorage.setItem('board', JSON.stringify(newBoard))
+    window.localStorage.setItem('turn', newTurn)
+
     // revisar si hay ganador
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       setWinner(newWinner)
       confetti()
+      window.localStorage.clear()
     } else if (checkEndGame(newBoard)) {
       return setWinner(false) // empate
     }
@@ -61,6 +76,8 @@ function App () {
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
+    window.localStorage.removeItem('board')
+    window.localStorage.removeItem('turn')
   }
 
   return (
