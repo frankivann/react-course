@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import { Square } from './components/Square'
-import { TURNS, WINNER_COMBOS } from './constants'
 import confetti from 'canvas-confetti'
+
+import { Square } from './components/Square'
+import { WinnerModal } from './components/WinnerModal'
+import { Board } from './components/Board'
+import { TURNS, WINNER_COMBOS } from './constants'
+
 import './App.css'
 
 function App () {
@@ -63,48 +67,14 @@ function App () {
     <main className='board'>
       <h1>Tic Tac Toe</h1>
       <button onClick={resetGame}>reset juego</button>
-      <section className='game'>
-        {
-          board.map((cell, index) => (
-            <Square
-              key={index}
-              index={index}
-              updateBoard={updateBoard}
-            >
-              {cell}
-            </Square>
-          ))
-        }
-      </section>
+      <Board board={board} updateBoard={updateBoard} />
 
       <section className='turn'>
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
 
-      {
-        winner !== null && (
-          <section className='winner'>
-            <div className='text'>
-              <h2>
-                {
-                  winner === false
-                    ? 'empate'
-                    : 'Ganó'
-                }
-              </h2>
-
-              <header className='win'>
-                {winner && <Square>{winner}</Square>}
-              </header>
-
-              <footer>
-                <button onClick={resetGame}>empezar denuevo</button>
-              </footer>
-            </div>
-          </section>
-        )
-      }
+      <WinnerModal winner={winner} resetGame={resetGame} />
     </main>
   )
 }
