@@ -1,0 +1,22 @@
+{
+  "name": "04-react-technical-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "e2e": "playwright test",
+    "preview": "vite preview"
+    
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.30.0",
+    "@vitejs/plugin-react-swc": "3.0.1",
+    "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
