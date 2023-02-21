@@ -1,0 +1,44 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  color: orange;
+}
+
+.movies {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
+.listOfMovies {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.movie {
+  text-align: center;
+}
