@@ -1,34 +1,67 @@
-import { createContext, useState } from 'react'
+import { createContext, useReducer } from 'react'
 
 export const CartContext = createContext()
 
-export function CartProvider ({ children }) {
-  const [cart, setCart] = useState([])
+const initialState = []
+const reducer = (state, action) => {
+  console.log(state)
+  console.log(action)
 
-  const addToCart = product => {
-    // check if the product is already in the cart.
-    const productInCartIndex = cart.findIndex(item => item.id === product.id)
+  const { type, payload } = action
 
-    if (productInCartIndex >= 0) {
-      const newCart = structuredClone(cart)
-      newCart[productInCartIndex].quantity += 1
-      return setCart(newCart)
+  switch (type) {
+    case 'ADD_TO_CART': {
+      const { id } = payload
+      const productInCartIndex = state.findIndex(item => item.id === id)
+
+      if (productInCartIndex >= 0) {
+        const newState = structuredClone(state)
+        newState[productInCartIndex].quantity += 1
+        return newState
+      }
+
+      return [
+        ...state,
+        {
+          ...payload, // product
+          quantity: 1
+        }
+      ]
     }
 
-    setCart(prevState => ([
-      ...prevState,
-      {
-        ...product,
-        quantity: 1
-      }
-    ]))
-  }
+    case 'REMOVE_FROM_CART': {
+      const { id } = payload
+      return state.filter(item => item.id !== id)
+    }
 
-  const clearCart = () => setCart([])
+    case 'CLEAR_CART': {
+      return initialState
+    }
+
+    default:
+      break
+  }
+}
+
+export function CartProvider ({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  const addToCart = product => dispatch({
+    type: 'ADD_TO_CART',
+    payload: product
+  })
+
+  const removeFromCart = product => dispatch({
+    type: 'REMOVE_FROM_CART',
+    payload: product
+  })
+
+  const clearCart = () => dispatch({ type: 'CLEAR_CART' })
 
   const value = {
-    cart,
+    cart: state,
     addToCart,
+    removeFromCart,
     clearCart
   }
 
