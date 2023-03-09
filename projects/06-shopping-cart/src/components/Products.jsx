@@ -22,11 +22,13 @@ export function Products ({ products }) {
                 <strong>{product.title}</strong> - {product.price}$
               </div>
               <div>
-                <button onClick={() => {
-                  isProductInCart
-                    ? removeFromCart(product)
-                    : addToCart(product)
-                }}
+                <button
+                  style={isProductInCart ? { backgroundColor: 'red' } : { backgroundColor: '#09f' }}
+                  onClick={() => {
+                    isProductInCart
+                      ? removeFromCart(product)
+                      : addToCart(product)
+                  }}
                 >
                   {
                     isProductInCart
