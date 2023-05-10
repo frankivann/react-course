@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Button, Col, Container, Row, Stack } from 'react-bootstrap'
 import './App.css'
-import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
-import { useStore } from './hooks/useStore'
-import { AUTO_LANGUAGE, SectionType } from './constants'
 import { ArrowsIcon } from './components/Icons'
 import { LanguageSelector } from './components/LanguageSelector'
 import { TextArea } from './components/TextArea'
+import { AUTO_LANGUAGE, SectionType } from './constants'
+import { useStore } from './hooks/useStore'
 
 function App () {
   const {
