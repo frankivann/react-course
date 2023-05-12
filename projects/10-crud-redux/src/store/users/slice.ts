@@ -48,9 +48,14 @@ export const usersSlice = createSlice({
     deleteUserById: (state, action: PayloadAction<UserId>) => {
       const id = action.payload
       return state.filter(user => user.id !== id)
+    },
+    rollbackUser: (state, action: PayloadAction<UserWithId>) => {
+      const { payload } = action
+      const isUserAlreadyDefined = state.some(user => user.id === payload.id)
+      if (!isUserAlreadyDefined) state.push(payload)
     }
   }
 })
 
 export default usersSlice.reducer
-export const { addNewUser, deleteUserById } = usersSlice.actions
+export const { addNewUser, deleteUserById, rollbackUser } = usersSlice.actions

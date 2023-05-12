@@ -6,8 +6,7 @@ import {
   TableCell,
   TableHead,
   TableHeaderCell,
-  TableRow,
-  Title
+  TableRow
 } from '@tremor/react'
 import { useUser } from '../hooks/useUserActions'
 import { useAppSelector } from '../hooks/store'
@@ -18,10 +17,10 @@ export function ListOfUsers () {
 
   return (
     <Card>
-      <Title>
+      <h1>
         Usuarios
         <Badge style={{ marginLeft: '8px' }}>{users.length}</Badge>
-      </Title>
+      </h1>
       <Table>
         <TableHead>
           <TableRow>
