@@ -10,12 +10,14 @@ function App () {
   const { query, error, updateQuery } = useQuery()
   const { movies, getMovies, loading } = useMovies({ query, sort })
 
-  const getDebounceMovies = useCallback(debounce(query => {
-    getMovies({ query })
-  }, 300)
-  , [])
+  const getDebounceMovies = useCallback(
+    debounce((query) => {
+      getMovies({ query })
+    }, 300),
+    []
+  )
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault()
     getMovies({ query })
   }
@@ -24,7 +26,7 @@ function App () {
     setSort(!sort)
   }
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const newQuery = event.target.value
     updateQuery(newQuery)
     getDebounceMovies(newQuery)
@@ -32,7 +34,6 @@ function App () {
 
   return (
     <div className='home'>
-
       <header>
         <h1>Buscador de Pelis 🎥</h1>
         <form onSubmit={handleSubmit}>
@@ -42,22 +43,13 @@ function App () {
             value={query}
             onChange={handleChange}
           />
-          <input
-            type='checkbox'
-            onChange={handleSort}
-            checked={sort}
-          />
+          <input type='checkbox' onChange={handleSort} checked={sort} />
           <button>buscar</button>
         </form>
         {error && <small className='error'>{error}</small>}
       </header>
 
-      {
-        loading
-          ? <small>cargando...</small>
-          : <Movies movies={movies} />
-      }
-
+      {loading ? <small>cargando...</small> : <Movies movies={movies} />}
     </div>
   )
 }
